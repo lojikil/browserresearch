@@ -13,13 +13,16 @@
 
 from bottle import route, run, response, request
 
+tmpl = None
+
+
 @route('/gateway')
 def gateway():
     foo = request.get_cookie("foo")
     print "in /gateway, foo = {0}".format(foo)
     if foo is None:
         response.set_cookie("foo", "foo-gateway", path="/gateway")
-    return "current cookies: {0}".format(foo)
+    return "{0}".format(foo)
 
 @route('/gateway-backend')
 def gateway():
@@ -27,7 +30,7 @@ def gateway():
     print "in /gateway-backend, foo = {0}".format(foo)
     if foo is None:
         response.set_cookie("foo", "foo-gateway-backend", path="/gateway-backend")
-    return "current cookies: {0}".format(foo)
+    return "{0}".format(foo)
 
 @route('/g')
 def gateway():
@@ -35,6 +38,14 @@ def gateway():
     print "in /g, foo = {0}".format(foo)
     if foo is None:
         response.set_cookie("foo", "foo", path="/g")
-    return "current cookies: {0}".format(foo)
+    return "{0}".format(foo)
+
+@route('/')
+def index():
+    global tmpl
+    if tmpl is None:
+        with file('cookietesting.html') as fh:
+            tmpl = fh.read()
+    return tmpl
 
 run(port=8082)

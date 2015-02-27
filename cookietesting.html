@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Cookie Testing...</title>
+    <script language="javascript">
+
+function fetchCookie() {
+  var req = new XMLHttpRequest(),
+      node = document.getElementById('writeLoc'),
+      val = null,
+      label = null,
+      urls = ["/g", "/gateway", "/gateway-backend"],
+      uidx = 0;
+
+  for(uidx in urls) {
+    req = new XMLHttpRequest();
+    //alert(urls[uidx]);
+    req.open("GET", urls[uidx], true);
+    req.onreadystatechange = (function(req, url) {
+      return function() {
+        //alert(req.readyState);
+        if(req.readyState == 4){
+          var par = document.getElementById('writeLoc'),
+              lbl = document.createElement('span'),
+              res = document.createElement("span"),
+              br = document.createElement("br");
+          lbl.innerText = "for URL: " + url;
+          res.innerText = "  " + req.responseText;
+          lbl.style.fontWeight = "bold";
+          par.appendChild(lbl);
+          par.appendChild(res);
+          par.appendChild(br);
+        }
+      };
+    })(req, urls[uidx]);
+    req.send(null);
+  }
+
+  //document.cookie += "foo=";
+
+  for(uidx = 2; uidx >= 0; uidx--){
+    req = new XMLHttpRequest();
+    req.open("GET", urls[uidx], true);
+    req.onreadystatechange = (function(req, url) {
+      return function() {
+        //alert(req.readyState);
+        if(req.readyState == 4){
+          var par = document.getElementById('writeLoc'),
+              lbl = document.createElement('span'),
+              res = document.createElement("span"),
+              br = document.createElement("br");
+          lbl.innerText = "for URL: " + url;
+          res.innerText = "  " + req.responseText;
+          lbl.style.fontWeight = "bold";
+          par.appendChild(lbl);
+          par.appendChild(res);
+          par.appendChild(br);
+        }
+      };
+    })(req, urls[uidx]);
+    req.send(null);
+  }
+}
+window.onload = fetchCookie;
+    </script>
+  </head>
+  <body>
+    <h3>Results:</h3>
+    <div id="writeLoc">
+    </div>
+  </body>
+</html>
