@@ -8,4 +8,4 @@ Browser Research: testing how browser's deal with various items
 - Automate adding all combinations of Cache Control headers, then doubling up
 - Futz around with `Expires` and Pragma
 - CSP and the like should be interesting
-
+- Just allow folks to specify N Cache-Control headers, hmm
